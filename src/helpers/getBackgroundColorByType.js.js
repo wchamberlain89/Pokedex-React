@@ -1,15 +1,15 @@
 const backgroundColorsByType = {
   rock: {
-    primary: 'hsl(349,32,69)',
-    secondary: 'hsl(349, 22, 84)'
+    primary: '#786824',
+    secondary: '#B8A038'
   },
   ice: {
     primary: 'hsl(230,90%,93%)',
     secondary: 'hsl(230,90%,88%)'
   },
   dark: {
-    primary: 'hsl(336,95%,6%)',
-    secondary: 'hsl(336,95%,9%)'
+    primary: '#49392F',
+    secondary: '#705848'
   },
   psychic: {
     primary: 'hsl(319,63%,54%)',
@@ -47,39 +47,33 @@ const backgroundColorsByType = {
     primary: 'hsl(22, 70%, 15%)',
     secondary: 'hsl(22, 80%, 21%)',
   },
+  ghost: {
+    primary: '#493963',
+    secondary: '#705898',
+  },
   ground: {
     primary: 'hsl(30, 61%, 26%)',
     secondary: 'hsl(30, 51%, 30%)',
   },
-  ghost: {
-    primary: 'hsl(30, 61%, 26%)',
-    secondary: 'hsl(30, 51%, 30%)',
-  },
   poison: {
-    primary: 'hsl(30, 61%, 26%)',
-    secondary: 'hsl(30, 51%, 30%)',
+    primary: '#A040A0',
+    secondary: '#C183C1',
   },
   fairy: {
-    primary: 'hsl(30, 61%, 26%)',
-    secondary: 'hsl(30, 51%, 30%)',
+    primary: '#	F4BDC9',
+    secondary: '#EE99AC',
   },
   electric: {
-    primary: 'hsl(30, 61%, 26%)',
-    secondary: 'hsl(30, 51%, 30%)',
+    primary: '#F8D030',
+    secondary: '#FAE078',
   },
   normal: {
-    primary: 'hsl(30, 61%, 26%)',
-    secondary: 'hsl(30, 51%, 30%)',
+    primary: '#A8A878',
+    secondary: '#C6C6A7',
   },
-  rock: {
-    primary: 'hsl(30, 61%, 26%)',
-    secondary: 'hsl(30, 51%, 30%)',
-  },
-  
 }
 
 const getBackgroundColorByType = (type) => {
-  console.log('running getBackgroundColor with type: ', type)
   return backgroundColorsByType[type]
 }
 

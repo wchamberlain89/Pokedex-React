@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import PokemonList from './PokemonList'
 import PokemonService from '../PokemonApiService'
-import ErrorMessage from './ErrorMessage'
+
 
 const Header = styled.h3`
   font-size: 1.25em;
@@ -31,17 +31,13 @@ const PokemonGeneration = ({ id }) => {
   if(status === 'error') {
     console.log(error)
   }
-  
-  console.log(data.pokemon_species.sort((a, b) => {
-    return a.url + b.url
-  }))
 
   return (
     <Container>
       <Header onClick={() => setShowing(!showing)}>
         {data.main_region.name}
       </Header>
-      <PokemonList pokemon={data.pokemon_species.sort((a, b) => a.url - b.url )} showing={showing} />
+      <PokemonList pokemon={data.pokemon_species.sort((a, b) => a.url - b.url )} onClickItem={() => setShowing(!showing)} showing={showing} />
     </Container>
   )
 }
