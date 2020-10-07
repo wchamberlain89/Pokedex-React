@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import Pokemon from './Pokemon'
 
 const Pokedex = () => {
@@ -8,6 +8,9 @@ const Pokedex = () => {
       <Switch>
         <Route path='/pokemon/:id'>
           <Pokemon />
+        </Route>
+        <Route path='/'>
+          <Redirect to='/pokemon/bulbasaur'/>
         </Route>
       </Switch>
     </>
