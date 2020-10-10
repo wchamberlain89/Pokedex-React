@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components'
+import DrawerContext from './context/DrawerContext'
 
 const Container = styled.div`
   position: fixed;
   top: 0;
-  width: 50vw;
+  left: -50vw;
+  width: 25vw;
   height: 100vh;
   background-color: #FEFEFE;
   z-index: 999;
-  display: ${({showing}) => showing ? 'block' : 'none'}
+  transition: 0.35s ease-out;
+  &.open {
+    left: 0;
+  }
 `
 
 const Button = styled.button`
@@ -19,17 +24,20 @@ const Button = styled.button`
   right: 2rem;
 `
 
-const Drawer = ({ children, showing }) => {
+export const Drawer = ({ children, showing }) => {
+  const { isOpen } = useContext(DrawerContext)
   return (
-    <Container showing={showing}>
+    <Container className={ isOpen ? 'open' : null }>
       {children}
     </Container>
   )
 }
 
-Drawer.Button = ({ children, onClick }) => {
+export const DrawerButton = ({ children, onClick }) => {
+  const { drawerToggle } = useContext(DrawerContext)
+  console.log(drawerToggle)
   return (
-    <Button onClick={onClick}>
+    <Button onClick={drawerToggle}>
       {children}
     </Button>
   )

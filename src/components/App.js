@@ -5,9 +5,10 @@ import {
 } from 'react-query'
 import GlobalStyles from '../globalStyles'
 import Pokedex from './Pokedex'
-import Drawer from './Drawer'
+import {Drawer, DrawerButton} from './Drawer'
 import PokemonGenerationsList from './PokemonGenerationsList'
 import PokedexIcon from '../assets/pokedex.png';
+import DrawerProvider from './context/DrawerProvider'
 
 const queryCache = new QueryCache()
 
@@ -22,11 +23,13 @@ function App() {
     <>
       <GlobalStyles/>
       <ReactQueryCacheProvider queryCache={queryCache}>
-        <Drawer showing={drawerShowing}>
-          <PokemonGenerationsList />
-        </Drawer>
-        <Drawer.Button onClick={() => toggleDrawer(drawerShowing)}><img style={{ width: '100%' }} src={PokedexIcon}/></Drawer.Button>
-        <Pokedex />
+        <DrawerProvider>
+          <Drawer showing={drawerShowing}>
+            <PokemonGenerationsList />
+          </Drawer>
+          <DrawerButton onClick={() => toggleDrawer(drawerShowing)}><img style={{ width: '100%' }} src={PokedexIcon}/></DrawerButton>
+          <Pokedex />
+        </DrawerProvider>
       </ReactQueryCacheProvider>
     </>
   )

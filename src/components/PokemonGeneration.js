@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import PokemonList from './PokemonList'
 import PokemonService from '../PokemonApiService'
-
+import DrawerContext from './context/DrawerContext'
 
 const Header = styled.h3`
   font-size: 1.25em;
@@ -21,7 +21,8 @@ const Container = styled.li`
 `
 
 const PokemonGeneration = ({ id }) => {
-  const [ showing, setShowing ] = useState(false)
+  const { drawerClose } = useContext(DrawerContext)
+  const [showing, setShowing] = useState(false)
   const { data, status, error } = useQuery(['generation', id], () => PokemonService.getGeneration(id))
   
   if(status === 'loading') {
@@ -37,7 +38,7 @@ const PokemonGeneration = ({ id }) => {
       <Header onClick={() => setShowing(!showing)}>
         {data.main_region.name}
       </Header>
-      <PokemonList pokemon={data.pokemon_species.sort((a, b) => a.url - b.url )} onClickItem={() => setShowing(!showing)} showing={showing} />
+      <PokemonList pokemon={data.pokemon_species.sort((a, b) => a.url - b.url )} onClickItem={drawerClose} showing={showing}/>
     </Container>
   )
 }

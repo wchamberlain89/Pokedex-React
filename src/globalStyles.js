@@ -19,7 +19,12 @@ const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-family: "Roboto Slab"
+    font-family: "Poppins";
+  }
+
+  body {
+    background-color: '#DEDEDE';
+    color: black;
   }
 
   a {
@@ -29,6 +34,23 @@ const GlobalStyles = createGlobalStyle`
     &:hover {
       color: #333; 
     }
+  }
+
+  tr {
+    margin-top: 1em;
+  }
+
+  th, td {
+    padding-top: 10px;
+  }
+
+  th {
+    text-align: right;
+  }
+
+  td {
+    padding-left: 2em;
+
   }
 
   li {

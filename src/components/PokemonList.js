@@ -1,8 +1,7 @@
-import React from 'react'
-import { useQuery } from 'react-query'
-import PokemonService from '../PokemonApiService'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import DrawerContext from './context/DrawerContext'
 
 const PokemonListItem = styled.li`
   font-size: 1em;
@@ -10,7 +9,7 @@ const PokemonListItem = styled.li`
   transition: 0.3sec ease-out;
   
   &:hover {
-    transform: scale(1.1);
+    color: darkred;
   }
 
   &::first-child {
@@ -30,12 +29,9 @@ const PokemonList = ({ pokemon, showing = true, onClickItem }) => {
   )
 }
 
-const PokemonListItemComponent = ({pokemon, children}) => {
-  const pokemonData = useQuery(['pokemon', pokemon.name], () => PokemonService.getPokemon(pokemon.name))
-  const pokemonSpeciesData = useQuery(['species-info', pokemon.name], () => PokemonService.getSpeciesInfo(pokemon.name))
-  
+const PokemonListItemComponent = ({ pokemon, children, onClick }) => {
   return (
-    <PokemonListItem>{children}</PokemonListItem> 
+    <PokemonListItem onClick={onClick}>{children}</PokemonListItem> 
   )
 }
 
