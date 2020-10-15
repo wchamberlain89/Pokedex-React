@@ -32,6 +32,7 @@ const StatBar = ({ stat, color }) => {
 const PokemonBaseStats = ({ stats, color }) => {
   return (
     <Card>
+      <Card.Title>Base Stats</Card.Title>
       <ul>
         {stats.map(stat => <StatBar stat={stat} color={color} />)}
       </ul>

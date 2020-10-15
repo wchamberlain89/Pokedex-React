@@ -7,6 +7,7 @@ import PokemonTypeContext from './context/PokemonTypeContext'
 import PokemonCharacteristics from './PokemonCharacteristics'
 import PokemonBaseStats from './PokemonBaseStats'
 import PokemonAbilities from './PokemonAbilities'
+import PokemonEvolutionChain from './PokemonEvolutionChain'
 import Card from './Card'
 
 const Container = styled.div`
@@ -38,24 +39,6 @@ const usePokemonEvolutionChain = (evolutionChainURL) => {
   return pokemonEvolutionChain
 }
 
-const PokemonEvolutionChain = ({ pokemon }) => {
-  return (
-    pokemon ? pokemon.map(pokemon => <PokemonSprite key={pokemon.name} pokemon={pokemon} /> ) : null
-  )
-}
-
-const PokemonSprite = ({ pokemon }) => {
-  const pokemonData = useQuery(['pokemon', pokemon.name], () => PokemonService.getPokemon(pokemon.name))
-  const pokemonSpeciesData = useQuery(['species-info', pokemon.name], () => PokemonService.getSpeciesInfo(pokemon.name))
-
-  return (
-    <Link to={`/pokemon/${pokemon.name}`}>
-      <li>{pokemon.name}</li>
-      {pokemonData.data && <img src={pokemonData && pokemonData.data.sprites.front_default}/>}
-    </Link>
-  )
-}
-
 const PokemonInfoSection = ({ pokemon, speciesInfo }) => {
   const pokemonEvolutionChainData = usePokemonEvolutionChain(speciesInfo.evolution_chain.url)
   const { typeColors } = React.useContext(PokemonTypeContext)
@@ -65,7 +48,7 @@ const PokemonInfoSection = ({ pokemon, speciesInfo }) => {
       <PokemonCharacteristics pokemon={pokemon} speciesInfo={speciesInfo} />
       <PokemonBaseStats color={typeColors && typeColors.primary} stats={pokemon.stats} />
       <PokemonAbilities abilites={pokemon.abilities} />
-      <PokemonEvolutionChain pokemon={pokemonEvolutionChainData} />
+      {pokemonEvolutionChainData && <PokemonEvolutionChain pokemon={pokemonEvolutionChainData} /> }
     </Container>
   )
 }
