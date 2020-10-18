@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import getBackgroundColorByType from '../helpers/getBackgroundColorByType.js'
 import PokemonService from '../PokemonApiService'
 import PokemonTypeContext from './context/PokemonTypeContext'
+import TypeIcon from './TypeIcon'
 
 const Container = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const Container = styled.div`
   padding: 40px 40px;
   color: #000;
   transition: 0.3sec ease-out;
-  overflow-x: hidden;
+  overflow: hidden;
   z-index: -100;
   @media screen and (max-width: 1024px) {
     font-size: 80%;
@@ -41,7 +42,9 @@ const Header = styled.div`
 const Image = styled.img`
   position: relative;
   width: 100%;
-  max-width: 600px;
+  left: -15%;
+  top: -10vh;
+  max-width: 900px;
 `
 
 const ImageBackground = styled.div`
@@ -110,7 +113,7 @@ const PokemonAttributesContainer = styled.div`
   }
 `
 const PokemonAttribute = styled.span`
-  margin-top: .625em;
+  margin-top: 1em;
 `
 
 const PokemonBio = styled.p`
@@ -132,6 +135,10 @@ const PokemonHeroSection = ({ pokemon, speciesInfo }) => {
   const { type, setType, typeColors } = useContext(PokemonTypeContext)
   const PokemonImage = useQuery(['pokemon-hero-image', pokemon.id], () => PokemonService.getPokemonHeroImage(pokemon.id))
   
+  if(PokemonImage.status === 'loading') {
+    console.log('loading pokemon ', pokemon.id)
+  }
+
   React.useEffect(() => {
     setType(pokemon.types[0].type.name)
   }, [ pokemon ])
@@ -140,12 +147,9 @@ const PokemonHeroSection = ({ pokemon, speciesInfo }) => {
     return null
   }
 
-  // box-shadow: 6px 6px 14px 0 rgba(0, 0, 0, 0.2),
-  // -8px -8px 18px 0 rgba(255, 255, 255, 0.55);
-
   return (
     <>
-    <Container style={{backgroundColor: '#FCFCFC' || typeColors.primary}}>
+    <Container style={{ backgroundColor: typeColors.primary }}>
       <Header>
         <PokemonNumber>#{formatPokemonNumber(pokemon.id)}</PokemonNumber>
         <PokemonName>{pokemon.name.toUpperCase()}</PokemonName>
@@ -153,14 +157,17 @@ const PokemonHeroSection = ({ pokemon, speciesInfo }) => {
       </Header>
       <ImageContainer>
         <ImageBackground color={typeColors.secondary}/>
-        {PokemonImage.loading ? null : <Image src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}/>}
+        {PokemonImage.status === 'loading' ? null : <Image src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}/>}
       </ImageContainer>
       <PokemonInfoContainer>
-        <PokemonBio><strong>Bio - </strong> {speciesInfo.flavor_text_entries[0].flavor_text}</PokemonBio>
+        <PokemonBio><strong>Bio - </strong> {speciesInfo.flavor_text_entries.find(entry => entry.language.name === 'en').flavor_text.replace(/\/f/g, '')}</PokemonBio>
         <PokemonAttributesContainer>
-          <PokemonAttribute><strong>Weight -</strong> {pokemon.weight}</PokemonAttribute>
-          <PokemonAttribute><strong>Height -</strong> {pokemon.height}</PokemonAttribute>
-          <PokemonAttribute><strong>Type -</strong> {pokemon.types[0].type.name}</PokemonAttribute>
+          <PokemonAttribute><strong>Weight -</strong> {pokemon.weight}lbs</PokemonAttribute>
+          <PokemonAttribute><strong>Height -</strong> {Math.floor(pokemon.height / 12)}'{pokemon.height % 12}"</PokemonAttribute>
+          <div style={{display: 'flex', alignItems: 'center', marginTop: '.625em'}}>
+            <PokemonAttribute><strong>Type -</strong></PokemonAttribute>
+            {pokemon.types.map(type => <TypeIcon type={type.type.name}/>)}
+          </div>
         </PokemonAttributesContainer>
       </PokemonInfoContainer>
     </Container>

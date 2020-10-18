@@ -4,17 +4,23 @@ import PokemonService from '../PokemonApiService'
 import Card from './Card'
 
 const PokemonAbility = ({ ability }) => {
-  const abilityInfo = useQuery('ability', () => PokemonService.getAbilityInfo(ability.url))
+  const abilityInfo = useQuery(['ability', ability.url],
+   () => PokemonService.getAbilityInfo(ability.url))
   
   if(abilityInfo.status === 'loading') {
     return null
+  }
+
+  const getEnglishDescription = () => {
+    const englishAbility = abilityInfo.data.effect_entries.find(effect => effect.language.name === 'en')
+    return englishAbility.effect
   }
   
   return (
     <li>
       <Card.Subtitle>{ability.name}</Card.Subtitle>
       <p>
-        {abilityInfo.data['effect_entries'][1].effect}
+        {getEnglishDescription()}
       </p>
     </li>
   )

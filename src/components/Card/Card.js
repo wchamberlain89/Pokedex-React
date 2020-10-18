@@ -1,9 +1,9 @@
 import React from 'react'
 import * as s from './CardStyles'
 
-const Card = ({ children }) => {
+const Card = ({ children, ...restProps }) => {
   return (
-    <s.Container>
+    <s.Container {...restProps}>
       { children }
     </s.Container>
   )

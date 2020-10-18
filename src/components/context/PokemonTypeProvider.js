@@ -9,6 +9,7 @@ const PokemonTypeProvider = ({ children }) => {
       colors: {}
     }
   );
+  
   const [typeColors, setTypeColors] = useState()
 
   React.useEffect( () => {

@@ -6,20 +6,18 @@ import DrawerProvider from './context/DrawerProvider'
 
 const Pokedex = () => {
   return (
-    <>
+    <div>
       <PokemonTypeProvider>
-       
-          <Switch>
-            <Route path='/pokemon/:id'>
-              <Pokemon />
-            </Route>
-            <Route path='/'>
-              <Redirect to='/pokemon/bulbasaur'/>
-            </Route>
-          </Switch>
-        
+        <Switch>
+          <Route path='/pokemon/:id'>
+            <Pokemon />
+          </Route>
+          <Route path='/'>
+            <Redirect to='/pokemon/bulbasaur'/>
+          </Route>
+        </Switch>
       </PokemonTypeProvider>
-    </>
+    </div>
   )
 }
 

@@ -11,7 +11,7 @@ export const Title = styled.h3`
   font-size: 2.3em;
   letter-spacing: 1.2;
   text-transform: uppercase;
-  line-height: 2.5em;
+  line-height: 3em;
   margin-top: -1.25em;
   font-weight: 100;
 `

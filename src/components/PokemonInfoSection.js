@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 import PokemonService from '../PokemonApiService'
@@ -8,13 +7,36 @@ import PokemonCharacteristics from './PokemonCharacteristics'
 import PokemonBaseStats from './PokemonBaseStats'
 import PokemonAbilities from './PokemonAbilities'
 import PokemonEvolutionChain from './PokemonEvolutionChain'
-import Card from './Card'
+import PokemonTypeChart from './PokemonTypeChart'
 
 const Container = styled.div`
-  min-height: 100vh;
-  width: 100%;
   background-color: #FCFCFC;
   padding: 150px 40px 0 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+`
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+  grid-gap: 40px;
+  justify-content: center;
+
+  @media screen and (max-width: 800px){
+    grid-template-columns: 1fr;
+  }
+`
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin-top: 40px;
+  }
 `
 
 const usePokemonEvolutionChain = (evolutionChainURL) => {
@@ -45,10 +67,17 @@ const PokemonInfoSection = ({ pokemon, speciesInfo }) => {
   console.log(typeColors && typeColors.primary, "istype")
   return (
     <Container>
-      <PokemonCharacteristics pokemon={pokemon} speciesInfo={speciesInfo} />
-      <PokemonBaseStats color={typeColors && typeColors.primary} stats={pokemon.stats} />
-      <PokemonAbilities abilites={pokemon.abilities} />
-      {pokemonEvolutionChainData && <PokemonEvolutionChain pokemon={pokemonEvolutionChainData} /> }
+      <Grid>
+        <Column>
+          <PokemonCharacteristics pokemon={pokemon} speciesInfo={speciesInfo} />
+          <PokemonAbilities abilites={pokemon.abilities} />
+        </Column>
+        <Column>
+          <PokemonBaseStats color={typeColors && typeColors.primary} stats={pokemon.stats} />
+          <PokemonTypeChart types={pokemon.types} />
+        </Column>
+      </Grid>
+        {pokemonEvolutionChainData && <PokemonEvolutionChain style={{marginTop: '40px'}}pokemon={pokemonEvolutionChainData} /> }
     </Container>
   )
 }

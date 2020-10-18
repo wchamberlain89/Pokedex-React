@@ -5,8 +5,8 @@ import DrawerContext from './context/DrawerContext'
 const Container = styled.div`
   position: fixed;
   top: 0;
-  left: -50vw;
-  width: 25vw;
+  left: -100vw;
+  width: 75vw;
   height: 100vh;
   background-color: #FEFEFE;
   z-index: 999;

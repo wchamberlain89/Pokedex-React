@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
-const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,100;1,800&display=swap');
+  const GlobalStyles = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,800;1,800&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;400;800&display=swap');
 
   * {
@@ -9,6 +9,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     line-height: 100%;
     box-sizing: border-box;
+    font-weight: normal;
   }
 
   button {
@@ -25,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     background-color: '#DEDEDE';
     color: black;
+    overflow-x: hidden;
   }
 
   a {

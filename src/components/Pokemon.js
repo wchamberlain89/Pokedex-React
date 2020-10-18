@@ -1,33 +1,27 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import PokemonService from '../PokemonApiService'
 import PokemonHeroSection from './PokemonHeroSection'
 import PokemonInfoSection from './PokemonInfoSection'
-import PokemonTypeContext from './context/PokemonTypeContext'
 
 const Pokemon = () => {
   const { id } = useParams()
-  const { data, error, status } = useQuery(['pokemon', id], () => PokemonService.getPokemon(id))
+  const pokemon = useQuery(['pokemon', id], () => PokemonService.getPokemon(id))
   const speciesInfo = useQuery(['species-info', id], () => PokemonService.getSpeciesInfo(id))
-  const pokemon = data;
-
   
-  if(status === 'loading' || speciesInfo.status === 'loading') {
+  if(pokemon.status === 'loading' || speciesInfo.status === 'loading') {
     return null
   }
   
-  if(status === 'error') {
-    console.log(error)
+  if(pokemon.status === 'error' || speciesInfo.status === 'error') {
+    console.log(pokemon.error)
   }
-
-
 
   return (
     <>
-        <PokemonHeroSection pokemon={pokemon} speciesInfo={speciesInfo.data} />
-        <PokemonInfoSection pokemon={pokemon} speciesInfo={speciesInfo.data} />
+        <PokemonHeroSection pokemon={pokemon.data} speciesInfo={speciesInfo.data} />
+        <PokemonInfoSection pokemon={pokemon.data} speciesInfo={speciesInfo.data} />
     </>
   )
 }

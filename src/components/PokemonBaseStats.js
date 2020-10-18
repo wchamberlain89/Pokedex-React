@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Card from './Card'
 
 const StatBarInner = styled.div`
-  width: ${props => `${props.value / 155 * 100}%`};
+  width: ${props => `${props.value / 255 * 100}%`};
   height: 100%;
   background-color: ${ props => props.color };
   border-radius: 40px;
@@ -11,21 +11,32 @@ const StatBarInner = styled.div`
 `
 
 const StatBarContainer = styled.div`
-  height: 15px;
-  width: 33.3333%;
+  height: 25px;
+  width: 100%;
   background-color: #F3F3F3;
   border-radius: 40px;
+  border: 2px solid ${ props => props.color };
 `
-const StatBar = ({ stat, color }) => {
+const StatBar = ({ value, color }) => {
+  console.log('props value', value / 255 * 100)
   return(
-    <li>
-      <span>
-        {stat.base_stat} - {stat.stat.name}
-      </span>
-      <StatBarContainer>
-        <StatBarInner color={color} value={stat.base_stat}/>
-      </StatBarContainer>
-    </li>
+    <StatBarContainer color={color}>
+      <StatBarInner color={color} value={value}/>
+    </StatBarContainer >
+  )
+}
+
+const PokemonBaseStat = ({ statValue, statName, color }) => {
+  return (
+    <tr>
+      <th style={{width: '20%'}}>{statName}</th>
+      <td>
+        <div style={{display: 'flex'}}>
+          <span style={{marginRight: '10px'}}>{statValue}</span>
+          <StatBar value={statValue} color={color} />
+        </div>
+      </td>
+    </tr>
   )
 }
 
@@ -33,9 +44,15 @@ const PokemonBaseStats = ({ stats, color }) => {
   return (
     <Card>
       <Card.Title>Base Stats</Card.Title>
+      <table style={{width: '100%'}}>
+        <tbody>
+          {stats.map(stat => <PokemonBaseStat statValue={stat.base_stat} statName={stat.stat.name} color={color} />)}
+        </tbody>
+      </table>
+      {/* OLD SOLUTION 
       <ul>
         {stats.map(stat => <StatBar stat={stat} color={color} />)}
-      </ul>
+      </ul> */}
     </Card>
   )
 }
